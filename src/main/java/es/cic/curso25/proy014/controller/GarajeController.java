@@ -15,41 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.cic.curso25.proy014.model.Coche;
-import es.cic.curso25.proy014.service.CocheService;
+import es.cic.curso25.proy014.model.Garaje;
+import es.cic.curso25.proy014.service.GarajeService;
 
 @RestController
-@RequestMapping(path = "coche")
-public class CocheController {
+@RequestMapping(path = "garaje")
+public class GarajeController {
 
     @Autowired
-    private CocheService cocheService;
+    private GarajeService garajeController;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
-    public ResponseEntity<Coche> create(@RequestBody Coche coche) {
-        coche = cocheService.create(coche);
-        return ResponseEntity.status(HttpStatus.CREATED).body(coche);
+    public ResponseEntity<Garaje> create(@RequestBody Garaje garaje) {
+        garaje = garajeController.create(garaje);
+        return ResponseEntity.status(HttpStatus.CREATED).body(garaje);
     }
+
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Coche> get(@PathVariable long id) {
-        Optional<Coche> coche = cocheService.get(Long.valueOf(id));
-        Coche Resultado = coche.orElseThrow(() -> new RuntimeException("Coche not found"));
+    public ResponseEntity<Garaje> get(@PathVariable long id) {
+        Optional<Garaje> garaje = garajeController.get(Long.valueOf(id));
+        Garaje Resultado = garaje.orElseThrow(() -> new RuntimeException("Garaje not found"));
         return ResponseEntity.ok().body(Resultado);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping()
-    public ResponseEntity<Coche> update(@RequestBody Coche coche) {
-        coche = cocheService.update(coche);
-        return ResponseEntity.ok().body(coche);
+    public ResponseEntity<Garaje> update(@RequestBody Garaje garaje) {
+        garaje = garajeController.update(garaje);
+        return ResponseEntity.ok().body(garaje);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
-         cocheService.delete(Long.valueOf(id));
+         garajeController.delete(Long.valueOf(id));
         return ResponseEntity.ok().body("borrado correctamente");
     }
 

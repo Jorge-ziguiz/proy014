@@ -15,41 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.cic.curso25.proy014.model.Coche;
-import es.cic.curso25.proy014.service.CocheService;
+import es.cic.curso25.proy014.model.Multa;
+import es.cic.curso25.proy014.service.MultaService;
 
 @RestController
-@RequestMapping(path = "coche")
-public class CocheController {
+@RequestMapping(path = "multa")
+public class MultaController {
 
     @Autowired
-    private CocheService cocheService;
+    private MultaService multaService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
-    public ResponseEntity<Coche> create(@RequestBody Coche coche) {
-        coche = cocheService.create(coche);
-        return ResponseEntity.status(HttpStatus.CREATED).body(coche);
+    public ResponseEntity<Multa> create(@RequestBody Multa Multa) {
+        Multa = multaService.create(Multa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Multa);
     }
+
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Coche> get(@PathVariable long id) {
-        Optional<Coche> coche = cocheService.get(Long.valueOf(id));
-        Coche Resultado = coche.orElseThrow(() -> new RuntimeException("Coche not found"));
+    public ResponseEntity<Multa> get(@PathVariable long id) {
+        Optional<Multa> Multa = multaService.get(Long.valueOf(id));
+        Multa Resultado = Multa.orElseThrow(() -> new RuntimeException("Multa not found"));
         return ResponseEntity.ok().body(Resultado);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping()
-    public ResponseEntity<Coche> update(@RequestBody Coche coche) {
-        coche = cocheService.update(coche);
-        return ResponseEntity.ok().body(coche);
+    public ResponseEntity<Multa> update(@RequestBody Multa Multa) {
+        Multa = multaService.update(Multa);
+        return ResponseEntity.ok().body(Multa);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
-         cocheService.delete(Long.valueOf(id));
+         multaService.delete(Long.valueOf(id));
         return ResponseEntity.ok().body("borrado correctamente");
     }
 

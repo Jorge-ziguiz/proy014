@@ -19,19 +19,20 @@ import es.cic.curso25.proy014.model.Coche;
 import es.cic.curso25.proy014.service.CocheService;
 
 @RestController
-@RequestMapping(path = "coche")
-public class CocheController {
+@RequestMapping(path = "usuario")
+public class UsurioController {
 
     @Autowired
     private CocheService cocheService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PostMapping()
     public ResponseEntity<Coche> create(@RequestBody Coche coche) {
         coche = cocheService.create(coche);
         return ResponseEntity.status(HttpStatus.CREATED).body(coche);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping(path = "/{id}")
     public ResponseEntity<Coche> get(@PathVariable long id) {
         Optional<Coche> coche = cocheService.get(Long.valueOf(id));
@@ -39,19 +40,11 @@ public class CocheController {
         return ResponseEntity.ok().body(Resultado);
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PutMapping()
     public ResponseEntity<Coche> update(@RequestBody Coche coche) {
         coche = cocheService.update(coche);
         return ResponseEntity.ok().body(coche);
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id) {
-         cocheService.delete(Long.valueOf(id));
-        return ResponseEntity.ok().body("borrado correctamente");
-    }
-
 
 }
