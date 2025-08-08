@@ -28,7 +28,7 @@ public class Usuario {
     private String Rol;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REFRESH })
-    private Usuario usuario;
+    private Coche coche;
 
     public Long getId() {
         return Id;
@@ -70,14 +70,7 @@ public class Usuario {
         Rol = rol;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
+ 
     public static enum Roles {
 
         ADMIN_GARAJE("ADMIN"),

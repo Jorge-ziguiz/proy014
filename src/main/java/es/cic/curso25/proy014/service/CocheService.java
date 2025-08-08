@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso25.proy014.repository.CocheRepository;
+import es.cic.curso25.proy014.dto.CrearCoche;
 import es.cic.curso25.proy014.model.Coche;
 
 @Service
@@ -23,6 +24,14 @@ public class CocheService {
     }
 
     public Coche create(Coche coche) {
+        return cocheRepository.saveAndFlush(coche);
+    }
+
+    public Coche createCocheUser(CrearCoche c) {
+        Coche coche = new Coche();
+        coche.setMarca(c.getMarca());
+        coche.setMatricula(c.getMatricula());
+        coche.setModelo(c.getModelo());
         return cocheRepository.saveAndFlush(coche);
     }
 
